@@ -1203,6 +1203,15 @@ describe('Autolinker Url Matching -', () => {
         );
     });
 
+    describe('unicode exploits', () => {
+        it('should strip out Right-To-Left Override Unicode characters for security', () => {
+            var result = autolinker.link('https://legit.ok/files\u202E4pm.asia');
+            expect(result).toBe(
+                '<a href="https://legit.ok/files4pm.asia">legit.ok/files4pm.asia</a>'
+            );
+        });
+    });
+
     describe('combination example', () => {
         it(`should automatically link all of the URLs of many different forms`, () => {
             let inputStr = `

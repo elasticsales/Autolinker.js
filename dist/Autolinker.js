@@ -2700,7 +2700,7 @@
                 else ;
             }
             // Handles the state when we've encountered a word character but are not
-            // in a hashtag. This is used to distinguish between a standalone 
+            // in a hashtag. This is used to distinguish between a standalone
             // hashtag such as '#Stuff' vs a hash char that is part of a word like
             // 'asdf#stuff' (the latter of which would not be a match)
             function stateNonHashtagWordChar(char) {
@@ -3941,8 +3941,7 @@
             }
             // Validate the value of the `hashtag` cfg
             var hashtag = this.hashtag;
-            if (hashtag !== false &&
-                hashtagServices.indexOf(hashtag) === -1) {
+            if (hashtag !== false && hashtagServices.indexOf(hashtag) === -1) {
                 throw new Error("invalid `hashtag` cfg '".concat(hashtag, "' - see docs"));
             }
             this.truncate = this.normalizeTruncateCfg(cfg.truncate);
@@ -4311,6 +4310,8 @@
             if (!textOrHtml) {
                 return '';
             } // handle `null` and `undefined` (for JavaScript users that don't have TypeScript support)
+            // Protect against RTLO attacks: https://security.snyk.io/vuln/SNYK-JS-AUTOLINKER-2438289
+            textOrHtml = textOrHtml.replace('\u202E', '');
             /* We would want to sanitize the start and end characters of a tag
              * before processing the string in order to avoid an XSS scenario.
              * This behaviour can be changed by toggling the sanitizeHtml option.

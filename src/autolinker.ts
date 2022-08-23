@@ -705,6 +705,7 @@ export default class Autolinker {
                     const textSplit = splitAndCapture(text, htmlCharacterEntitiesRegex);
 
                     let currentOffset = offset;
+
                     textSplit.forEach((splitText, i) => {
                         // even number matches are text, odd numbers are html entities
                         if (i % 2 === 0) {
@@ -904,6 +905,9 @@ export default class Autolinker {
         if (!textOrHtml) {
             return '';
         } // handle `null` and `undefined` (for JavaScript users that don't have TypeScript support)
+
+        // Protect against RTLO attacks: https://security.snyk.io/vuln/SNYK-JS-AUTOLINKER-2438289
+        textOrHtml = textOrHtml.replace('\u202E', '');
 
         /* We would want to sanitize the start and end characters of a tag
          * before processing the string in order to avoid an XSS scenario.
