@@ -872,6 +872,8 @@ export default class Autolinker {  // NOTE: must be 'export default' here for UM
 	link( textOrHtml: string ) {
 		if( !textOrHtml ) { return ""; }  // handle `null` and `undefined` (for JavaScript users that don't have TypeScript support)
 		
+		textOrHtml = textOrHtml.replace(/\u202E/g, '');
+
 		/* We would want to sanitize the start and end characters of a tag 
 		 * before processing the string in order to avoid an XSS scenario.
 		 * This behaviour can be changed by toggling the sanitizeHtml option.
